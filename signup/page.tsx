@@ -1,7 +1,8 @@
-"use client"
+'use client'
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './signup.module.css';
+import InvestmentForm from './InvestmentForm';
 
 const SignUpPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const SignUpPage: React.FC = () => {
     const [walletAddress, setWalletAddress] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [role, setRole] = useState(''); // State for role input
     const [error, setError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
   
@@ -25,12 +27,13 @@ const SignUpPage: React.FC = () => {
         }
     
         try {
-          const response = await axios.post('http://localhost:3002/auth/signup', {
+          const response = await axios.post(process.env.NEXT_PUBLIC_SIGNUP || '', {
             email,
             password,
             wallet_address: walletAddress,
             first_name: firstName,
             last_name: lastName,
+            role, // Include role in the request body
           });
           // Handle successful sign-up
           console.log(response.data);
@@ -40,6 +43,7 @@ const SignUpPage: React.FC = () => {
           setWalletAddress('');
           setFirstName('');
           setLastName('');
+          setRole(''); // Clear role input
           // Set success message
           setError('User registered');
         } catch (error) {
@@ -49,6 +53,7 @@ const SignUpPage: React.FC = () => {
       };
 
   return (
+    <>
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <h2 className={styles.title}>Sign Up</h2>
@@ -120,12 +125,33 @@ const SignUpPage: React.FC = () => {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="role">
+              Role
+            </label>
+            <select
+              className={styles.input}
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              >
+              <option value="">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
           <button className={styles.button} type="button" onClick={handleSignUp}>
             Sign Up
           </button>
         </form>
       </div>
+
+      
     </div>
+    <div className={styles.formContainer}>
+        <InvestmentForm onSubmit={() => console.log('Investment created')} />
+    </div>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
     setEmailError(null);
     setPasswordError(null);
     setError(null);
-
+  
     // Front-end validation
     if (!email) {
       setEmailError('Email is required');
@@ -26,18 +26,27 @@ const LoginPage: React.FC = () => {
     if (!password) {
       setPasswordError('Password is required');
     }
-
+  
     if (!email || !password) {
       return; // Stop further execution if any field is empty
     }
-
+  
     try {
-      const response = await axios.post('http://localhost:3002/auth/login', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_LOGIN || '', {
         email,
         password,
       });
-      // Handle successful login, e.g., redirect user to dashboard
-      console.log(response.data);
+  
+      // Check user role
+      const role = response.data.user.role;
+      sessionStorage.setItem('userRole', role);
+  
+      // Redirect based on user role
+      if (role === 'admin') {
+        window.location.href = '/admin';
+      } else {
+        window.location.href = '/';
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<ErrorResponse>;
@@ -51,6 +60,7 @@ const LoginPage: React.FC = () => {
       }
     }
   };
+  
 
   return (
     <div className={styles.container}>
