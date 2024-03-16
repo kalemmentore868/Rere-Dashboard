@@ -12,10 +12,10 @@ function Login (props) {
 	const [heartActive, setHeartActive] = useState(true);
 	
 	const navigate = useNavigate();
-    const [email, setEmail] = useState('demo@example.com');
+    const [email, setEmail] = useState('gamingwithhazzard@gmail.com');
     let errorsObj = { email: '', password: '' };
     const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('123456');
+    const [password, setPassword] = useState('Aaron123!');
     const dispatch = useDispatch();
 
     function onLogin(e) {
@@ -36,7 +36,10 @@ function Login (props) {
 		}
 		
 		dispatch(loadingToggleAction(true));
-		dispatch(loginAction(email, password, navigate));
+		const login = dispatch(loginAction(email, password, navigate));
+		console.log(login)
+		if (login) navigate('/dashboard')
+		else console.log('issues logging in')
     }
 
 

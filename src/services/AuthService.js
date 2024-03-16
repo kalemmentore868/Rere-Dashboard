@@ -12,7 +12,7 @@ export function signUp(email, password) {
         password,
     };
     return axios.post(
-        `http://localhost:3000/users/signup`,
+        process.env.REACT_APP_SIGNUP,
         postData,
     );
 }
@@ -23,31 +23,31 @@ export function login(email, password) {
         password,
     };
     return axios.post(
-        `http://localhost:3000/users/login`,
+        process.env.REACT_APP_LOGIN,
         postData,
     );
 }
 
 export function formatError(errorResponse) {
-    switch (errorResponse.error.message) {
-        case 'EMAIL_EXISTS':
-            //return 'Email already exists';
-            swal("Oops", "Email already exists", "error");
-            break;
-        case 'EMAIL_NOT_FOUND':
-            //return 'Email not found';
-            swal("Oops", "Email not found", "error",{ button: "Try Again!",});
-            break;
-        case 'INVALID_PASSWORD':
-            //return 'Invalid Password';
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
-            break;
-        case 'USER_DISABLED':
-            return 'User Disabled';
+    // switch (errorResponse.error.message) {
+    //     case 'EMAIL_EXISTS':
+    //         //return 'Email already exists';
+    //         swal("Oops", "Email already exists", "error");
+    //         break;
+    //     case 'EMAIL_NOT_FOUND':
+    //         //return 'Email not found';
+    //         swal("Oops", "Email not found", "error",{ button: "Try Again!",});
+    //         break;
+    //     case 'INVALID_PASSWORD':
+    //         //return 'Invalid Password';
+    //         swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+    //         break;
+    //     case 'USER_DISABLED':
+    //         return 'User Disabled';
 
-        default:
-            return '';
-    }
+    //     default:
+    //         return '';
+    // }
 }
 
 export function saveTokenInLocalStorage(tokenDetails) {

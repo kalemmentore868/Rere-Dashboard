@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
     }
   
     try {
-      const response = await axios.post(process.env.NEXT_PUBLIC_LOGIN || '', {
+      const response = await axios.post(process.env.REACT_APP_LOGIN || '', {
         email,
         password,
       });

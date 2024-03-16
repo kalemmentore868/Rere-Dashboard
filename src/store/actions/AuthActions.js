@@ -54,32 +54,24 @@ export function Logout(navigate) {
 
 export function loginAction(email, password, navigate) {
     return (dispatch) => {
-         login(email, password)
+        return login(email, password)
             .then((response) => { 
                 saveTokenInLocalStorage(response.data);
-                runLogoutTimer(
-                    dispatch,
-                    response.data.expiresIn * 1000,
-                    navigate,
-                );
-               dispatch(loginConfirmedAction(response.data));
-			   //console.log('kk------1');
-			   //console.log(kk);
-			   //console.log(response.data);
-			   //console.log('kk------2');
-			   //return response.data;
-				//return 'success';
-				//history.push('/dashboard');                
-				navigate('/dashboard');                
+                runLogoutTimer(dispatch, response.data.expiresIn, navigate);
+                dispatch(loginConfirmedAction(response.data));
+                console.log(response.data);
+                return true; // Move this line here               
             })
             .catch((error) => {
-				//console.log('error');
-				//console.log(error);
+                //console.log('error');
+                //console.log(error);
                 const errorMessage = formatError(error.response.data);
                 dispatch(loginFailedAction(errorMessage));
+                return false; // Return false when login fails
             });
     };
 }
+
 
 export function loginFailedAction(data) {
     return {
