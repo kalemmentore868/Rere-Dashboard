@@ -1,5 +1,5 @@
 /*!
- * Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  * Copyright 2022 Fonticons, Inc.
  */
@@ -1112,6 +1112,14 @@
   content: "\f612";
 }
 
+.fa-nfc-directional:before {
+  content: "\e530";
+}
+
+.fa-nfc-symbol:before {
+  content: "\e531";
+}
+
 .fa-nimblr:before {
   content: "\f5a8";
 }
@@ -1382,6 +1390,10 @@
 
 .fa-schlix:before {
   content: "\f3ea";
+}
+
+.fa-screenpal:before {
+  content: "\e570";
 }
 
 .fa-scribd:before {
