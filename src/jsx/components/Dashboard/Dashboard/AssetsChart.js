@@ -3,7 +3,7 @@ import ReactApexChart from "react-apexcharts";
 
 function AssetsChart () {  
 	const [state, setState] = useState({
-        series: [2478.90],
+        series: [12, 30, 20, 20],
         options: {
             chart: {
                 type: 'donut',
@@ -14,7 +14,7 @@ function AssetsChart () {
                    // startAngle: 120,
                     //endAngle: 360,
                   donut: {
-                    size: '78%',
+                    size: '72%',
                     labels: {
                         show: true,
                         name: {
@@ -32,7 +32,7 @@ function AssetsChart () {
                             fontSize: '12px',
                             fontWeight:'800',
                             fontFamily:'Arial',
-                            label: 'Total Assets',
+                            label: 'In-Store',
                            
                             formatter: function (w) {
                               return w.globals.seriesTotals.reduce((a, b) => {
@@ -47,7 +47,7 @@ function AssetsChart () {
             legend: {
                 show: false,
             },
-            colors: ['#C0E192', '#C0E192', '#C0E192','#C0E192'],
+            colors: ['#E085E4', '#2A353A', '#C0E192','#9568ff'],
             labels: ["VIP", "Reguler", "Exclusive", "Economic"],
             dataLabels: {
                 enabled: false,

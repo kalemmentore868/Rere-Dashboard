@@ -8,8 +8,7 @@ class TotalBalanceArea extends React.Component {
 			series: [
 				{
 					name: 'Net Profit',
-					// data: [100,300, 200, 250, 200, 240, 180,230,200, 250, 300],	
-					data: [0, 2478.9]				
+					data: [100,300, 200, 250, 200, 240, 180,230,200, 250, 300],					
 				}, 
             ],
 			options: {

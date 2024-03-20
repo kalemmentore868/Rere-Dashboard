@@ -9,8 +9,7 @@ class TotaldipositChart extends React.Component {
 			series: [
 				{
 					name: 'Net Profit',
-					// data: [200,300, 200, 250, 200, 240, 180,230,200, 200, 200],	
-					data: [0, 2478.90]			
+					data: [200,300, 200, 250, 200, 240, 180,230,200, 200, 200],				
 				}, 
             ],
 			options: {

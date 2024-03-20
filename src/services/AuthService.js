@@ -17,17 +17,27 @@ export function signUp(email, password) {
     );
 }
 
+// export function login(email, password) {
+//     const postData = {
+//         email,
+//         password,
+//     };
+//     return axios.post(
+//         process.env.REACT_APP_LOGIN,
+//         postData,
+//     );
+// }
 export function login(email, password) {
     const postData = {
         email,
         password,
+        returnSecureToken: true,
     };
     return axios.post(
-        process.env.REACT_APP_LOGIN,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
         postData,
     );
 }
-
 export function formatError(errorResponse) {
     // switch (errorResponse.error.message) {
     //     case 'EMAIL_EXISTS':
