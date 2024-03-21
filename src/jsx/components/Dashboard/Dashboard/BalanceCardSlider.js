@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide,  } from "swiper/react";
 //import { Autoplay } from "swiper";
 
@@ -8,7 +8,27 @@ import TotalBalanceArea from './TotalBalanceArea';
 import ProfitLossArea from './ProfitLossArea';
 import TotaldipositChart from './TotaldipositChart';
 import ethIcon from '../../../../images/coin64.avif'
-const BalanceCardSlider = () =>{
+import axios from 'axios';
+const BalanceCardSlider = ({ totalReturns, totalDeposits, investments }) =>{
+	const [usdAmount, setUsdAmount] = useState(totalReturns);
+	const [ethAmount, setEthAmount] = useState(0);
+  const convertToEth = async (returns) => {
+	try {
+	  const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/investments/ethereumPrice`);
+	  const ethPriceInUsd = response.data.ethereumPrice;
+	  const convertedEth = parseFloat(returns) / ethPriceInUsd;
+	  setEthAmount(convertedEth.toFixed(6)); // Display up to 6 decimal places
+	} catch (error) {
+	  console.error('Error fetching Ethereum price:', error);
+	}
+  };
+  
+  useEffect(() => {
+	convertToEth(totalReturns);
+
+  }, [usdAmount, totalReturns]);
+  
+  
     return(
         <>
             <Swiper className="mySwiper"						
@@ -48,18 +68,14 @@ const BalanceCardSlider = () =>{
 					<div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">$2,478.90</h4>
-								<p>Total Balance</p>
+								<h4 className="count-num">${totalReturns}</h4>
+								<p>Total Returns</p>
 								<div>
-									{/* <svg className="me-1" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M19.6997 12.4191C18.364 17.7763 12.9382 21.0365 7.58042 19.7006C2.22486 18.365 -1.03543 12.9388 0.300792 7.582C1.63577 2.22424 7.06166 -1.03636 12.4179 0.299241C17.7753 1.63487 21.0353 7.06169 19.6997 12.4191Z" fill="#F7931A"/>
-										<path d="M6.71062 11.684C6.65625 11.8191 6.51844 12.0215 6.20781 11.9447C6.21877 11.9606 5.41033 11.7456 5.41033 11.7456L4.86566 13.0015L6.29343 13.3575C6.55906 13.424 6.81938 13.4937 7.07563 13.5594L6.62155 15.3825L7.71748 15.6559L8.16716 13.8522C8.46655 13.9334 8.75716 14.0084 9.04153 14.079L8.5934 15.8743L9.6906 16.1477L10.1446 14.3281C12.0156 14.6821 13.4224 14.5393 14.0146 12.8472C14.4918 11.4847 13.9909 10.6987 13.0065 10.1862C13.7234 10.0209 14.2633 9.54937 14.4074 8.57532C14.6065 7.24471 13.5933 6.5294 12.208 6.05221L12.6574 4.24971L11.5602 3.97627L11.1227 5.73126C10.8343 5.65938 10.538 5.59157 10.2437 5.52437L10.6843 3.75781L9.58775 3.48438L9.13807 5.28623C8.89931 5.23186 8.66496 5.17808 8.43745 5.12154L8.43869 5.1159L6.92557 4.7381L6.63368 5.90996C6.63368 5.90996 7.44775 6.09653 7.43056 6.10808C7.87494 6.21902 7.95524 6.51307 7.94182 6.74622L6.71062 11.684ZM11.9006 12.0906C11.5615 13.4531 9.26747 12.7165 8.52372 12.5318L9.12622 10.1166C9.86995 10.3022 12.2549 10.6697 11.9006 12.0906ZM12.2399 8.55564C11.9306 9.79501 10.0212 9.16533 9.40183 9.01096L9.94808 6.82033C10.5674 6.97471 12.5621 7.26283 12.2399 8.55564Z" fill="white"/>
-									</svg> */}
 									<img className="me-1" style={{width: '20px', height: '20px'}} src={ethIcon} alt="icon" />
-									<span>0.000301</span>
+									<span>{ethAmount}</span>
 								</div>
 							</div>	
-							<TotalBalanceArea />
+							<TotalBalanceArea investments={investments}/>
 						</div>
 						<div className="back-icon">
 							<svg width="64" height="127" viewBox="0 0 64 127" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,11 +117,11 @@ const BalanceCardSlider = () =>{
 					<div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">$2,478.90</h4>
+								<h4 className="count-num">${totalDeposits}</h4>
 								<p className="sm-chart">Total Deposited</p>
 							</div>
 							{/* <div id="TotaldipositChart"></div> */}
-							<TotaldipositChart />
+							<TotaldipositChart investments={investments} totalDeposits={totalDeposits} />
 						</div>
 						<div className="back-icon">
 							<svg width="138" height="113" viewBox="0 0 138 113" fill="none" xmlns="http://www.w3.org/2000/svg">

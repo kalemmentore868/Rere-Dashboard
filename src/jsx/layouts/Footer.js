@@ -6,7 +6,7 @@ const Footer = () => {
 		<div className="footer out-footer">
 			<div className="copyright">
 				<p>Copyright © Designed &amp; Developed by{" "}
-					<a href="" target="_blank"  rel="noreferrer">
+					<a href="https://benefund.io/" target="_blank"  rel="noreferrer">
 						Benefund
 					</a>{" "}
 					{d.getFullYear()}

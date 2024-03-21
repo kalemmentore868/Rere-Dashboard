@@ -8,10 +8,11 @@ class TotaldipositChart extends React.Component {
 		this.state = {
 			series: [
 				{
-					name: 'Net Profit',
-					// data: [200,300, 200, 250, 200, 240, 180,230,200, 200, 200],	
-					data: [0, 2478.90]			
-				}, 
+					name: "Net Profit",
+					data: [0, ...this.props.investments.map(
+					  (investment) => investment.initial_investment
+					)],
+				  }, 
             ],
 			options: {
 				chart: {
@@ -155,13 +156,16 @@ class TotaldipositChart extends React.Component {
 						}
 					}
 				}	
-			}, 
+			},
 		};
 	}
 
+
   
 	render() {
+	
         return (
+
             <div id="TotaldipositChart">
                 <ReactApexChart 
 					options={this.state.options} 
@@ -170,6 +174,7 @@ class TotaldipositChart extends React.Component {
 					height={130}  
 					width={400}
 				/>
+
             </div>
         );
 	}
