@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import ReactApexChart from "react-apexcharts";
 
-function AssetsChart () {  
+function AssetsChart ({balance}) {  
 	const [state, setState] = useState({
-        series: [2478.90],
+        series: [balance],
         options: {
             chart: {
                 type: 'donut',

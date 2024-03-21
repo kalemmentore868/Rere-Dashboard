@@ -136,6 +136,7 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
+import Pending from "./pages/Pending";
 
 
 
@@ -145,6 +146,7 @@ const Markup = () => {
     /// Dashboard
     { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },
+    { url: "pending", component: <Pending /> },
     { url: "dashboard-dark", component: <DashboardDark /> },
     { url: "index-1", component: <Dashboard2 /> },
     { url: "index-3", component: <Dashboard3 /> },

@@ -25,45 +25,47 @@ export function login(email, password) {
         returnSecureToken: true,
     };
     return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+        // `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
         postData,
     );
 }
-
-export function formatError(errorResponse) {
-    switch (errorResponse.error.message) {
-        case 'EMAIL_EXISTS':
-            //return 'Email already exists';
-            swal("Oops", "Email already exists", "error");
-            break;
-        case 'EMAIL_NOT_FOUND':
-            //return 'Email not found';
-           swal("Oops", "Email not found", "error",{ button: "Try Again!",});
-           break;
-        case 'INVALID_PASSWORD':
-            //return 'Invalid Password';
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
-            break;
-        case 'USER_DISABLED':
-            return 'User Disabled';
-
-        default:
-            return '';
-    }
-}
-
 export function saveTokenInLocalStorage(tokenDetails) {
-    tokenDetails.expireDate = new Date(
-        new Date().getTime() + tokenDetails.expiresIn * 1000,
-    );
+    // tokenDetails.expireDate = new Date(
+    //     new Date().getTime() + tokenDetails.expiresIn * 1000,
+    // );
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
+    console.log(localStorage.getItem('userDetails'));
+
 }
+export function formatError(errorResponse) {
+    // switch (errorResponse.error.message) {
+    //     case 'EMAIL_EXISTS':
+    //         //return 'Email already exists';
+    //         swal("Oops", "Email already exists", "error");
+    //         break;
+    //     case 'EMAIL_NOT_FOUND':
+    //         //return 'Email not found';
+    //        swal("Oops", "Email not found", "error",{ button: "Try Again!",});
+    //        break;
+    //     case 'INVALID_PASSWORD':
+    //         //return 'Invalid Password';
+    //         swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+    //         break;
+    //     case 'USER_DISABLED':
+    //         return 'User Disabled';
+
+    //     default:
+    //         return '';
+    // }
+}
+
+
 
 export function runLogoutTimer(dispatch, timer, navigate) {
-    setTimeout(() => {
-        //dispatch(Logout(history));
-        dispatch(Logout(navigate));
-    }, timer);
+    // setTimeout(() => {
+    //     dispatch(Logout(navigate));
+    // }, timer);
 }
 
 export function checkAutoLogin(dispatch, navigate) {

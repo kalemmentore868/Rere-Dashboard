@@ -14,7 +14,7 @@ const orderTable = [
     {email:'nadia@mail.com', title:'Nadia Edja', price:'$76,00', status:'Unpaid', statusChange:'danger'},
 ];
 
-const Order = () => {
+const Order = ({investment}) => {
     const checkboxFun = (type) => {
 		setTimeout(() => {
 			const checkbox = document.querySelectorAll('.order-history input');

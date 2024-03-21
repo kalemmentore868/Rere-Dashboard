@@ -10,12 +10,13 @@ import bg6 from '../../images/background/bg6.jpg';
 
 function Login (props) {
 	const [heartActive, setHeartActive] = useState(true);
-	
+	const [errorMessage, setErrorMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState('');
 	const navigate = useNavigate();
-    const [email, setEmail] = useState('demo@example.com');
+    const [email, setEmail] = useState('');
     let errorsObj = { email: '', password: '' };
     const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('123456');
+    const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
     function onLogin(e) {
@@ -74,25 +75,25 @@ function Login (props) {
 															<p>Enter your e-mail address and your password. </p>
 															<div className="form-group mb-3">
 																{/* <input name="dzName" required="" className="form-control" placeholder="User Name" type="text" /> */}
-																<input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+																<input type="email" placeholder = "email@example.com" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
 																{errors.email && <div className="text-danger fs-12">{errors.email}</div>}
 															</div>
 															<div className="form-group mb-3">
 															{/* <input name="dzName" required="" className="form-control " placeholder="Type Password" type="password" /> */}
-																<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />	
+																<input type="password" placeholder = "********" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />	
 																{errors.password && <div className="text-danger fs-12">{errors.password}</div>}
 															</div>
 															<div className="form-group text-left mb-5">
 																<button type="submit" className="btn btn-primary dz-xs-flex m-r5">login</button>
-																<span className="form-check d-inline-block ms-2">
+																{/* <span className="form-check d-inline-block ms-2">
 																	<input type="checkbox" className="form-check-input" id="check1" name="example1" />
 																	<label className="form-check-label" htmlFor="check1">Remember me</label>
-																</span>
+																</span> */}
 																{/* <Link to={"#"}  className="nav-link m-auto btn tp-btn-light btn-primary">
 																	Forget Password ?
 																</Link> 	 */}
 															</div>
-															<div className="dz-social">
+															{/* <div className="dz-social">
 																<h5 className="form-title fs-20">Sign In With</h5>
 																<ul className="dz-social-icon dz-border dz-social-icon-lg text-white">
 																	<li><a target="_blank" href="https://www.facebook.com/" className="fab fa-facebook-f btn-facebook"></a></li>
@@ -100,13 +101,13 @@ function Login (props) {
 																	<li><a target="_blank" href="https://www.linkedin.com/" className="fab fa-linkedin-in btn-linkedin"></a></li>
 																	<li><a target="_blank" href="https://twitter.com/" className="fab fa-twitter btn-twitter"></a></li>
 																</ul>
-															</div>
+															</div> */}
 														</form>
-														<div className="text-center bottom"> 
+														{/* <div className="text-center bottom"> 
 															<NavLink to="/page-register" className="btn btn-primary button-md btn-block" >
 																Create an account
 															</NavLink> 																	
-														</div>
+														</div> */}
 													</div>
 																										
 												</div>												
@@ -119,7 +120,7 @@ function Login (props) {
 														className={`heart ${heartActive ? "" : "heart-blast"}`}														
 														onClick={()=>setHeartActive(!heartActive)}
 													></span>
-													<a href="https://www.dexignzone.com/" target="_blank"> DexignZone </a> All rights reserved.</span> 
+													<a href="https://benefund.io/" target="_blank"> Benefund </a> All rights reserved.</span> 
 												</div>
 											</div>
 										</div>													
