@@ -773,3 +773,7 @@ button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--r
     font-size: 0.9rem;
   }
 }
+
+.list-table .list-row span{
+  padding: unset !important;
+}

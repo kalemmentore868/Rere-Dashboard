@@ -68,7 +68,7 @@ const BalanceCardSlider = ({ totalReturns, totalDeposits, investments }) =>{
 					<div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">${totalReturns}</h4>
+								<h4 className="count-num">£{totalReturns}.00</h4>
 								<p>Total Returns</p>
 								<div>
 									<img className="me-1" style={{width: '20px', height: '20px'}} src={ethIcon} alt="icon" />
@@ -117,7 +117,7 @@ const BalanceCardSlider = ({ totalReturns, totalDeposits, investments }) =>{
 					<div className="card card-wiget">
 						<div className="card-body">
 							<div className="card-wiget-info">
-								<h4 className="count-num">${totalDeposits}</h4>
+								<h4 className="count-num">£{totalDeposits}.00</h4>
 								<p className="sm-chart">Total Deposited</p>
 							</div>
 							{/* <div id="TotaldipositChart"></div> */}

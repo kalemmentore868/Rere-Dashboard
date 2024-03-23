@@ -51,7 +51,7 @@ const OrderForm = ({balance}) =>{
 			<form>
 				<div className="sell-blance">
 					<label className="form-label text-primary">IMO AMOUNT</label>
-					<div className="form-label blance"><span>BALANCE:</span><p>${balance}</p></div>
+					<div className="form-label blance"><span>BALANCE:</span><p>£{balance}</p></div>
 					<div className="input-group">
 						<input type="text" className="form-control" disabled placeholder="10,000.00" />
 						<span className="input-group-text">USDT</span>

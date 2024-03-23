@@ -211,7 +211,7 @@ const Home = () => {
 																		</svg>
 																		{data.datatitle}
 																	</span>
-																	<h5>${totalReturns + totalDeposits}</h5>													
+																	<h5>£{totalReturns + totalDeposits}.00</h5>													
 																</div>
 															))}
 														</div>
@@ -307,7 +307,7 @@ const Home = () => {
 									</div>
 								</div>
 							</div>
-							 <div className="col-xl-12 col-sm-6">
+							 <div className="col-xl-12 col-sm-6" >
 	
 								<div className="card">
 									<div className="card-header py-2">
@@ -318,10 +318,10 @@ const Home = () => {
 											<nav className="buy-sell style-1">
 												<Nav className=" nav-tabs" id="nav-tab1" role="tablist">
 													<Nav.Link as="button"  className="nav-link " eventKey="Openorder"  type="button" >Open Orders</Nav.Link>
-													<Nav.Link as="button" className="nav-link" eventKey="Orderhistory" type="button" >Order History</Nav.Link>
+													{/* <Nav.Link as="button" className="nav-link" eventKey="Orderhistory" type="button" >Order History</Nav.Link> */}
 												</Nav>
 											</nav>
-											<Tab.Content>
+											<Tab.Content style={{overflow: 'scroll'}}>
 												<Tab.Pane eventKey="Openorder">
 													<div className="list-row-head">
 													<span>Price</span>
