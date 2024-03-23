@@ -1,3 +1,7 @@
+.login-background{
+  background-color: #261255 !important;
+}
+
 .popUp-qr {
   position: fixed;
   top: 0;
@@ -734,4 +738,38 @@ button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--r
 	width: auto;
 	height: auto;
 	display: contents;
+}
+
+
+@media only screen and (min-width: 425px){
+  .buy-coin .coin-img img {
+    bottom: -20% !important;
+  }
+}
+
+@media only screen and (min-width: 375px){
+  .buy-coin .coin-img img {
+    bottom: -23% !important;
+  }
+}
+
+@media only screen and (min-width: 320px){
+  .buy-coin .coin-img img {
+    bottom: -20% !important;
+  }
+}
+
+/* responsive.css */
+@media (max-width: 768px) {
+  /* For mobile devices */
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* For tablet devices */
+  .table-responsive {
+    font-size: 0.9rem;
+  }
 }

@@ -46,13 +46,17 @@ function Login (props) {
 			<div className="browse-job login-style3">
 				<div className="bg-img-fix overflow-hidden" style={{background:'#fff url('+ bg6 + ')',  height: "100vh"}}>
 					<div className="row gx-0">
-						<div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 vh-100 bg-white ">
+						<div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 vh-100 bg-white login-background" style={{background: '#261255 !important;'}}>
 							<div id="mCSB_1" className="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" style={{maxHeight: "653px"}}>
 								<div id="mCSB_1_container" className="mCSB_container" style={{position:"relative", top:"0", left:"0", dir:"ltr"}}>
 									<div className="login-form style-2">
 										<div className="card-body">
 											<div className="logo-header">
-												<Link to={"#"} className="logo"><img src={logo} alt="" className="width-230 mCS_img_loaded" /></Link>
+												<h1 ><Link to={"#"} className="logo" style={{color: '#9568FF'}}>
+													{/* <img src='https://benefund.io/static/media/logo-white.56fa340f79b0444d53b6.png' alt="" className="width-230 mCS_img_loaded" /> */}
+													BeneFund
+													</Link>
+													</h1>
 											</div>											
 											<div className="nav nav-tabs border-bottom-0" >														
 												<div className="tab-content w-100" id="nav-tabContent">
@@ -68,7 +72,7 @@ function Login (props) {
 															</div>
 														)}
 														<form className=" dz-form pb-3" onSubmit={onLogin}>
-															<h3 className="form-title m-t0">Personal Information</h3>
+															<h3 className="form-title m-t0" style={{color: 'white important;'}}>Personal Information</h3>
 															<div className="dz-separator-outer m-b5">
 																<div className="dz-separator bg-primary style-liner"></div>
 															</div>

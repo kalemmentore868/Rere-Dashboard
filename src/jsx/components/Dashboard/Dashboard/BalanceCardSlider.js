@@ -15,6 +15,7 @@ const BalanceCardSlider = ({ totalReturns, totalDeposits, investments }) =>{
   const convertToEth = async (returns) => {
 	try {
 	  const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/investments/ethereumPrice`);
+	  console.log(response.data.ethereumPrice)
 	  const ethPriceInUsd = response.data.ethereumPrice;
 	  const convertedEth = parseFloat(returns) / ethPriceInUsd;
 	  setEthAmount(convertedEth.toFixed(6)); // Display up to 6 decimal places
@@ -25,9 +26,8 @@ const BalanceCardSlider = ({ totalReturns, totalDeposits, investments }) =>{
   
   useEffect(() => {
 	convertToEth(totalReturns);
-
-  }, [usdAmount, totalReturns]);
-  
+	console.log(ethAmount)
+  }, [usdAmount, totalReturns, ethAmount]);
   
     return(
         <>

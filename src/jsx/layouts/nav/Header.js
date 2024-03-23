@@ -105,7 +105,7 @@ const Header = ({ onNote }) => {
 				<div
 					className="dashboard_bar"
 					style={{ textTransform: "capitalize" }}
-				  >Crypto Zone
+				  >BeneFund
 					{/* {finalName.join(" ").length === 0 ? "Crypto Zone": finalName.join(" ") === "dashboard light"
 					  ? "Crypto Zone"
 					  : finalName.join(" ")} */}
@@ -180,7 +180,7 @@ const Header = ({ onNote }) => {
 					<ul>
 						<Dropdown as="li" className="nav-item dropdown header-profile">
 							<Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
-								<img src={profile} width={20} alt="" />
+								<img src='https://benefund.io/favicon.ico' width={20} alt="" />
 							</Dropdown.Toggle>
 							<Dropdown.Menu align="right" className="dropdown-menu dropdown-menu-end">
 								{/* <Link to="/app-profile" className="dropdown-item ai-icon">
