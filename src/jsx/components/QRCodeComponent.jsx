@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-const QRCodeComponent = ({ address, toggleQR }) => {
+const QRCodeComponent = ({ pounds, address, toggleQR }) => {
   const [showCopiedPopup, setShowCopiedPopup] = useState(false);
 
   const handleCopy = () => {
@@ -14,13 +14,14 @@ const QRCodeComponent = ({ address, toggleQR }) => {
     }, 2000); // Hide popup after 2 seconds
   };
 
+
   return (
     <div className='popUp-qr'>
       <div className="qr-background">
         <CloseIcon onClick={toggleQR} style={{marginLeft: 'auto'}} />
         <h2>Scan QR Code to Make IMO Deposit Via Ether</h2>
         <QRCode value={`ethereum:${address}`} />
-        <b>£10,000.00</b>
+        <b>£{pounds}</b>
         <p>
           <b>Address:</b> {address}
           <ContentCopyIcon 

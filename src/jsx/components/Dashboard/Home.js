@@ -12,7 +12,6 @@ import BalanceCardSlider from './Dashboard/BalanceCardSlider';
 import OrderForm from './Dashboard/OrderForm';
 //import ServerStatusBar from './Dashboard/ServerStatusBar';
 import {LtcIcon, BtcIcon, XtzIcon, EthIcon} from './SvgIcon';
-import QRCodeComponent from '../../components/QRCodeComponent';
 
 import coin from './../../../images/coin.png';
 import metaverse from './../../../images/metaverse.png';

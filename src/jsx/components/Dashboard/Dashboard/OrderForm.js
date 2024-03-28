@@ -3,36 +3,16 @@ import {Link} from 'react-router-dom';
 import ReactSlider from 'react-slider'
 import Nouislider from "nouislider-react";
 import QRCodeComponent from '../../QRCodeComponent';
-//import noUiSlider from "nouislider";
-//import "nouislider/distribute/nouislider.css";
-//import 'nouislider/dist/nouislider.css';
+import axios from 'axios';
 
-//let slider;
 
-// function destroyExistingSlider(){
-//   if(slider && slider.noUiSlider){
-//     slider.noUiSlider.destroy();
-//   }
-// }
+const OrderForm = ({balance, investments}) =>{
 
-const OrderForm = ({balance}) =>{
-	// useEffect(()=>{
-	// 	//destroyExistingSlider();
-	// 	var slider = document.getElementById('slider');
-	// 	noUiSlider.create(slider, {
-	// 		start: [20, 80],
-	// 		connect: true,
-	// 		range: {
-	// 			'min': 0,
-	// 			'max': 100
-	// 		}
-	// 	});
-	//});
 	const [showQr, setShowQr] = useState(false);
-
+	const [placeholderValue, setPlaceholderValue] = useState(""); // Initialize placeholderValue state with an empty string
+	const [pounds, setPounds] = useState(0)
 	function toggleQR(){
 		setShowQr(!showQr)
-		
 	}
 
 	useEffect(()=>{
@@ -45,16 +25,53 @@ const OrderForm = ({balance}) =>{
 			document.documentElement.style.overflowY = 'auto';
 		}
 	}, [showQr])
+
+	const fetchAndUpdatePlaceholder = async () => {
+		try {
+			let convertedPlaceholder = placeholderValue; // Default to the original placeholder value
+			for (let i = investments.length - 1; i >= 0; i--) {
+				if (investments[i].imo_deposit_amount > 0) {
+					const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/investments/poundsToUsdt`);
+					const exchangeRate = response.data.usdtToPoundsRate; // Assuming the response data structure
+					// Ensure that exchangeRate and investment amount are numeric
+					const convertedAmount = parseFloat(investments[i].imo_deposit_amount) * parseFloat(exchangeRate);
+					convertedPlaceholder = convertedAmount.toFixed(2);
+					setPounds(convertedPlaceholder)
+					break; // Exit the loop once a value greater than 0 is found
+				}
+			}
+			console.log('Converted placeholder:', convertedPlaceholder);
+			setPlaceholderValue(convertedPlaceholder);
+		} catch (error) {
+			console.error('Error converting pounds to USDT:', error);
+			// Handle error gracefully, fallback to default value or previous placeholder
+		}
+	};
+	useEffect(() => {
+		// Fetch and update placeholder every 5 seconds
+		const intervalId = setInterval(fetchAndUpdatePlaceholder, 20000);
+	
+		// Cleanup function to clear the interval when component unmounts or when dependencies change
+		return () => clearInterval(intervalId);
+	}, [investments, placeholderValue]); // Run whenever investments or placeholderValue change
+	
+	useEffect(()=> {
+		fetchAndUpdatePlaceholder()
+	},[])
 	return(
 		<>
-			{showQr && (<QRCodeComponent address="0x71544528c2e3dfb51dfce92fa393c3b192042b04" toggleQR={toggleQR}/>)}
+			{showQr && (<QRCodeComponent pounds={pounds} address="0x71544528c2e3dfb51dfce92fa393c3b192042b04" toggleQR={toggleQR}/>)}
 			<form>
 				<div className="sell-blance">
 					<label className="form-label text-primary">IMO AMOUNT</label>
 					<div className="form-label blance"><span>BALANCE:</span><p>£{balance}</p></div>
 					<div className="input-group">
-						<input type="text" className="form-control" disabled placeholder="10,000.00" />
-						<span className="input-group-text">USDT</span>
+					<input
+					type="text"
+					className="form-control"
+					disabled
+					placeholder={placeholderValue}
+					/>						<span className="input-group-text">USDT</span>
 					</div>
 				</div>
 				{/* <div className="sell-blance">
