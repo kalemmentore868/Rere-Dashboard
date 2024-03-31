@@ -12,24 +12,25 @@ const UserInfo = ({ user }) => {
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/investments/${user._id}`
     );
-    if(response.data.length > 0){
+    if (response.data.length > 0) {
       setInvestments(response.data);
-    }else{
-      setMessage('You currently have not made any investments')
+    } else {
+      setMessage("You currently have not made any investments");
     }
   };
 
   const handleStatusClick = () => {
     // Check if any investment has status 'Ready for Deposit'
-    const readyForDeposit = investments.some(investment => investment.status === 'Withdraw Funds');
+    const readyForDeposit = investments.some(
+      (investment) => investment.status === "Withdraw Funds"
+    );
     if (readyForDeposit) {
       // Redirect to /dashboard
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   };
 
   useEffect(() => {
-    
     fetchInvestments();
   }, [user]);
   const navigate = useNavigate();
@@ -43,12 +44,12 @@ const UserInfo = ({ user }) => {
     checkMobile();
 
     // Add event listener for window resize
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  
+
   return (
     <Container style={{ maxWidth: "600px", marginTop: "20px" }}>
       <Card className="mb-3">
@@ -61,9 +62,12 @@ const UserInfo = ({ user }) => {
           </Card.Text>
           <Card.Text>
             <strong>Wallet Address:</strong>{" "}
-            <span style={{ color: "#28a745" }}>{
-              user.wallet_address.replace( user.wallet_address.substring(3,39), '...')}
-              </span>
+            <span style={{ color: "#28a745" }}>
+              {user.wallet_address.replace(
+                user.wallet_address.substring(3, 39),
+                "..."
+              )}
+            </span>
           </Card.Text>
         </Card.Body>
       </Card>
@@ -71,35 +75,46 @@ const UserInfo = ({ user }) => {
       {investments.length > 0 && (
         <Card>
           <Card.Header>
-            <strong>Your Investments {isMobile && (
-        <div style={{ color: 'red', textAlign: 'center' }}>
-          Scroll to the right for more info
-        </div>
-      )}</strong>
+            <strong>
+              Your Investments{" "}
+              {isMobile && (
+                <div style={{ color: "red", textAlign: "center" }}>
+                  Scroll to the right for more info
+                </div>
+              )}
+            </strong>
           </Card.Header>
           <Table striped bordered hover responsive>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Initial Investment</th>
-      <th>Total Return</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {investments.map((investment) => (
-      <tr key={investment._id}>
-        <td>{new Date(investment.createdAt).toLocaleDateString()}</td>
-        <td>${investment.initial_investment}</td>
-        <td>${investment.total_return}</td>
-        <td onClick={handleStatusClick} style={{ color: investment.status === 'Withdraw Funds' ? 'blue' : 'black', cursor: 'pointer' }}>
-          {investment.status}
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</Table>
-
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Initial Investment</th>
+                <th>Total Return</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {investments.map((investment) => (
+                <tr key={investment._id}>
+                  <td>{new Date(investment.createdAt).toLocaleDateString()}</td>
+                  <td>£{investment.initial_investment}</td>
+                  <td>£{investment.total_return}</td>
+                  <td
+                    onClick={handleStatusClick}
+                    style={{
+                      color:
+                        investment.status === "Withdraw Funds"
+                          ? "blue"
+                          : "black",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {investment.status}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </Card>
       )}
     </Container>
