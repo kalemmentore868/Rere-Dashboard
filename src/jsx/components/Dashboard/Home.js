@@ -191,9 +191,9 @@ const Home = () => {
 
                         <p className="congrats-message">
                           Your profits of £{totalDeposits}.00 are waiting to be
-                          withdrawn into your account. Once the depoist is made
+                          withdrawn into your account. Once the deposit is made
                           your profits will be released to the account. If this
-                          is your first trade on our system you will recieve a
+                          is your first trade on our system you will receive a
                           full refund
                         </p>
                         {/* <Link to={"/exchange"} className="btn btn-primary">Make Deposit</Link> */}
