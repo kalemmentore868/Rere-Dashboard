@@ -66,6 +66,7 @@ const Home = () => {
       );
       if (response.ok) {
         const data = await response.json();
+
         if (data.length > 0) {
           let sumDeposits = 0;
           let sumReturns = 0;
@@ -190,7 +191,7 @@ const Home = () => {
                         </h2>
 
                         <p className="congrats-message">
-                          Your profits of £{totalDeposits}.00 are waiting to be
+                          Your profits of £{totalReturns}.00 are waiting to be
                           withdrawn into your account. Once the deposit is made
                           your profits will be released to the account. If this
                           is your first trade on our system you will receive a
