@@ -40,6 +40,7 @@ const HomeTax = () => {
   const [currentEthPrice, setCurrentEthPrice] = useState(null);
   const [priceDirection, setPriceDirection] = useState(""); // "up", "down", or ""
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [isTaxPaid, setIsTaxPaid] = useState(false);
   const [tax, setTax] = useState(0);
 
   function toggleDisclaimer() {
@@ -55,6 +56,7 @@ const HomeTax = () => {
   if (getUser) {
     user = JSON.parse(getUser);
   }
+
   const pickerData = [
     // {fillcolor: 'var(--primary)', datatitle:'XTZ(40%)', price:'763'},
     // {fillcolor: '#2A353A', datatitle:'BTC(20%)', price:'321'},
@@ -87,6 +89,13 @@ const HomeTax = () => {
               setTax(data[i].tax_amount);
             }
           }
+          console.log(data[data.length - 1].status, isTaxPaid);
+          if (data[data.length - 1].status === "Complete") {
+            setIsTaxPaid(true);
+          }
+
+          console.log(isTaxPaid);
+
           setInvestments(data);
           setTotalDeposits(sumDeposits);
           setTotalReturns(sumReturns);
@@ -240,12 +249,21 @@ const HomeTax = () => {
                           {user.last_name} takes swift action to fulfill this
                           obligation to HMRC to prevent any further
                           complications.
-                          <Link
-                            className="btn btn-primary w-75 mt-4 d-block"
-                            onClick={toggleDisclaimer}
-                          >
-                            Disclaimer
-                          </Link>
+                          {isTaxPaid ? (
+                            <Link
+                              className="btn btn-primary w-75 mt-4 d-block"
+                              to={"/dashboard"}
+                            >
+                              Go Back to Investments
+                            </Link>
+                          ) : (
+                            <Link
+                              className="btn btn-primary w-75 mt-4 d-block"
+                              onClick={toggleDisclaimer}
+                            >
+                              Disclaimer
+                            </Link>
+                          )}
                         </p>
                         {/* <Link to={"/exchange"} className="btn btn-primary">Make Deposit</Link> */}
                       </div>
