@@ -9,6 +9,7 @@ const OrderForm = ({ balance, investments }) => {
   const [showQr, setShowQr] = useState(false);
   const [placeholderValue, setPlaceholderValue] = useState(""); // Initialize placeholderValue state with an empty string
   const [pounds, setPounds] = useState(0);
+  const [usdt, setUsdt] = useState(0);
   function toggleQR() {
     setShowQr(!showQr);
   }
@@ -38,8 +39,8 @@ const OrderForm = ({ balance, investments }) => {
             parseFloat(investments[i].imo_deposit_amount) /
             parseFloat(exchangeRate);
           convertedPlaceholder = convertedAmount.toFixed(2);
-          setPounds(convertedPlaceholder);
-
+          setUsdt(convertedPlaceholder);
+          setPounds(investments[i].imo_deposit_amount);
           console.log(investments[i].imo_deposit_amount);
           break; // Exit the loop once a value greater than 0 is found
         }

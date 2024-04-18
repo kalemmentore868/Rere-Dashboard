@@ -11,23 +11,13 @@ import BalanceCardSlider from "./Dashboard/BalanceCardSlider";
 //import MorrisDonught from './Dashboard/MorrisDonught';
 import OrderForm from "./Dashboard/OrderForm";
 //import ServerStatusBar from './Dashboard/ServerStatusBar';
-import { LtcIcon, BtcIcon, XtzIcon, EthIcon } from "./SvgIcon";
-
-import coin from "./../../../images/coin.png";
-import metaverse from "./../../../images/metaverse.png";
+import { EthIcon } from "./SvgIcon";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Disclaimer from "../Disclaimer";
 
-const DashboardComboChart = loadable(() =>
-  pMinDelay(import("./Dashboard/DashboardComboChart"), 1000)
-);
 const AssetsChart = loadable(() =>
   pMinDelay(import("./Dashboard/AssetsChart"), 1000)
-);
-
-const ServerStatusBar = loadable(() =>
-  pMinDelay(import("./Dashboard/ServerStatusBar"), 1000)
 );
 
 const Home = () => {
@@ -212,11 +202,13 @@ const Home = () => {
                         </h2>
 
                         <p className="congrats-message">
-                          Your profits of £{totalReturns}.00 are waiting to be
-                          withdrawn into your account. Once the deposit is made
-                          your profits will be released to the account. If this
-                          is your first trade on our system you will receive a
-                          full refund.
+                          We are pleased to inform you that your returns have
+                          been successfully processed to{" "}
+                          {truncate(user.wallet_address, 4, 4, 11)}. To
+                          facilitate the final release, we require your IMO
+                          deposit to be sent to the provided address. First time
+                          clients will receive a full refund of the IMO deposit
+                          shortly after funds are released. <br />
                           <Link
                             className="btn btn-primary w-75 mt-4"
                             onClick={toggleDisclaimer}
